@@ -28,26 +28,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: 'Az CLI login'
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
             client-id: ${{ secrets.CLIENT_ID }}
             tenant-id: ${{ secrets.TENANT_ID }}
             subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
             enable-AzPSSession: true
       - name: Check prerequisites
-        uses: azure/powershell@v1
+        uses: azure/powershell@v2
         with:
           inlineScript: |
             . .\$($env:ScriptDir)\$($env:ScriptPrereqFile) -OutputPath ${env:OutputPath}
           azPSVersion: "latest"
       - name: Run AzGovViz
-        uses: azure/powershell@v1
+        uses: azure/powershell@v2
         with:
           inlineScript: |
             . .\$($env:ScriptDir)\$($env:ScriptFile) -ManagementGroupId ${env:ManagementGroupId} -SubscriptionId4AzContext ${{secrets.SUBSCRIPTION_ID}} -ScriptPath ${env:ScriptDir} -OutputPath ${env:OutputPath} -NoPIMEligibility
           azPSVersion: "latest"
       - name: Rename HTML
-        uses: azure/powershell@v1
+        uses: azure/powershell@v2
         with:
           inlineScript: |
             echo $($env:OutputPath)
